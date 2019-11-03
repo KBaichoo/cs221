@@ -1,6 +1,16 @@
 See https://github.com/asweigart/pyautogui
 instaillation in order to use the program.
 
+Note:
+Clicking functionality for OS X broke in:
+'pyautogui>=0.9.45'
+
+So do a:
+`pip3 install 'pyautogui==0.9.44'`
+
+More details:
+https://github.com/asweigart/pyautogui/issues/369
+
 Attached are an example script using this functionality to write into the 
 textbox.
 

@@ -9,8 +9,7 @@ import subprocess
 # Home to application
 pyautogui.moveTo(200, 200, duration=1)
 
-# Left-clicks don't aren't clicking for me.
-#pyautogui.click(clicks=2, interval=1)
+pyautogui.click(clicks=2, interval=1)
 
 print('Sleeping... focus the window to type on.')
 time.sleep(10)
