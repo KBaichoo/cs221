@@ -14,7 +14,7 @@ https://github.com/asweigart/pyautogui/issues/369
 Attached are an example script using this functionality to write into the 
 textbox.
 
-There's also an example with `./5\_left.sh & ./interpret.py` that is 
+There's also an example with `./5_left.sh & ./interpret.py` that is 
 essentially the backbone of our application. The left scripts writes
 output to some tmp file, that interpret reads and uses pygui to interact
 with the application. We just need to plug in our NN model to write to
