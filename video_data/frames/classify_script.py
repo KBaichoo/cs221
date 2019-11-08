@@ -16,7 +16,7 @@ if __name__ == '__main__':
     print('To classify use "a" for left, "s" for stay and "d" for right')
     for root, dirs, files in os.walk("."):
         print('Looking at current directory...')
-        filtered_files = list(filter(lambda x: x.endswith('.jpg'), files))
+        filtered_files = sorted(list(filter(lambda x: x.endswith('.jpg'), files)))
         for image_file in filtered_files:
             with Image.open(image_file) as img:
                 print('Showing image file {}'.format(image_file))
