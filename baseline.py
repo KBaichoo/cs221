@@ -96,7 +96,7 @@ def main():
     kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
 
     train_loader = torch.utils.data.DataLoader(
-            datasets.ImageFolder('./baseline/train/',
+            datasets.ImageFolder('./frames/train/',
                        transform=transforms.Compose([
                            transforms.Grayscale(num_output_channels=1),
                            transforms.Resize((64,64)),
@@ -105,7 +105,7 @@ def main():
                        ])),
         batch_size=args.batch_size, shuffle=True, **kwargs)
     test_loader = torch.utils.data.DataLoader(
-            datasets.ImageFolder('./baseline/test/',
+            datasets.ImageFolder('./frames/test/',
                        transform=transforms.Compose([
                            transforms.Grayscale(num_output_channels=1),
                            transforms.Resize((64,64)),
