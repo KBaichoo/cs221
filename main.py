@@ -65,7 +65,9 @@ def StartGame():
     pyautogui.click(clicks=2, interval=1)
     pyautogui.press(['space'] * 2)
 
-
+def imageLoader(image, loader):
+    image = loader(image).float()
+    return image.cuda()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -97,12 +99,21 @@ if __name__ == '__main__':
 
     print('Starting')
     StartGame()
-    
+
+    loader = transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),
+        transforms.Resize((64,64)),
+        transforms.ToTensor(),
+        transforms.Normalize((0.1307,), (0.3081,))
+    ])
+
     image_count = 0
     while True:
         image_count += 1
         image_name = SCREENSHOT_DIR + str(image_count) + '.png'
         image = captureScreenshot(EXPECTED_REGION, image_name)
+        image = imageLoader(image, loader)
+        print(model(image))
 
         # TODO(kbaichoo): call to NN
 
