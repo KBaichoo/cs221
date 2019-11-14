@@ -14,7 +14,6 @@ from model import Net
 SCREENSHOT_DIR = '/tmp/screenshots/'
 START_DELAY = 5
 EXPECTED_REGION = (0,50,750,450)
-FILE_TO_OUTPUT_INSTRUCTIONS = '/tmp/game_input'
 
 
 def captureScreenshot(region, filename):
@@ -106,6 +105,7 @@ if __name__ == '__main__':
         image = captureScreenshot(EXPECTED_REGION, image_name)
 
         # TODO(kbaichoo): call to NN
+
         key, num_times = ('l', 10)
         ExecuteKey(key, num_times)
 
