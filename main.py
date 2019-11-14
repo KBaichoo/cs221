@@ -9,10 +9,12 @@ import pyautogui
 import subprocess
 import os
 from model import Net
+from torchvision import models, transforms
+
 
 
 SCREENSHOT_DIR = '/tmp/screenshots/'
-START_DELAY = 5
+START_DELAY = 2
 EXPECTED_REGION = (0,50,750,450)
 
 
@@ -48,17 +50,18 @@ def ExecuteKey(key, num_times):
     Presses one of the supported keys (l,r,s) corresponding to left,right,None
     num_times.
     """
-    supported_keys = {'l': 'left', 'r': 'right', 's': ''}
+    # TODO(kbaichoo): perhaps pressing and holding better?
+    #supported_keys = {0: 'left', 1: 'right', 2: ''}
+    supported_keys = {1: 'left', 0: 'right', 2: ''}
 
     if key not in supported_keys:
         logging.error('Unexpected key passed:', key)
 
     key_to_press = supported_keys[key]
-
     if key_to_press:
-        for i in range(0, num_times):
-            pyautogui.press(key_to_press)
-    logging.info('Pressing {} Num Times: {}'.format(key_to_press, num_times))
+        pyautogui.press([key_to_press] * num_times)
+    logging.info('TIME[{}]Pressing {} Num Times: {}'.format(time.time(),
+        key_to_press, num_times))
 
 def StartGame():
     pyautogui.moveTo(200, 200, duration = 1)
@@ -67,7 +70,8 @@ def StartGame():
 
 def imageLoader(image, loader):
     image = loader(image).float()
-    return image.cuda()
+    return image
+    #return image.cuda()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -98,6 +102,8 @@ if __name__ == '__main__':
     time.sleep(START_DELAY)
 
     print('Starting')
+    # Between each call to pyautogui
+    pyautogui.PAUSE = 0.1
     StartGame()
 
     loader = transforms.Compose([
@@ -113,13 +119,13 @@ if __name__ == '__main__':
         image_name = SCREENSHOT_DIR + str(image_count) + '.png'
         image = captureScreenshot(EXPECTED_REGION, image_name)
         image = imageLoader(image, loader)
-        print(model(image))
-
-        # TODO(kbaichoo): call to NN
-
-        key, num_times = ('l', 10)
+        image.unsqueeze_(0)
+        
+        output = model(image) 
+        pred = output.argmax(dim=1, keepdim=True) # get the index of the max log-probability
+        print('Prediction:', pred)
+        key, num_times = (pred[0][0].item(), 10)
         ExecuteKey(key, num_times)
 
         # TODO(kbaichoo): use a real rate limiter based on how long it takes
         # to process the file, etc..
-        time.sleep(1.0/fps)
