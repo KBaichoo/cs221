@@ -7,7 +7,7 @@ import torch
 import time
 import pyautogui
 from model import Net
-from torchvision import models, transforms
+from torchvision import transforms
 # mss is significantly faster than using screencapture.
 import mss
 import mss.tools
@@ -51,6 +51,13 @@ def captureScreenshot(region, filename):
     return pil_img
 
 
+def gameOver():
+    global SCT
+    # Test whether the top-right pixel is black (game going)
+    img = SCT.grab({'top': 52, 'left': 760, 'width': 1, 'height': 1})
+    return img.pixels[0] != (0, 0, 0)
+
+
 def outputMouseLocations():
     """
     Used for debugging by outputting current positions of the mouse
@@ -61,14 +68,12 @@ def outputMouseLocations():
         time.sleep(0.2)
 
 
-def ExecuteKey(key, num_times):
+def ExecuteKeyPress(key, num_times):
     """
     Presses one of the supported keys (l,r,s) corresponding to left,right,None
     num_times.
     """
-    # TODO(kbaichoo): perhaps pressing and holding better?
-    #supported_keys = {0: 'left', 1: 'right', 2: ''}
-    supported_keys = {1: 'left', 0: 'right', 2: ''}
+    supported_keys = {0: 'left', 1: 'right', 2: ''}
 
     if key not in supported_keys:
         logging.error('Unexpected key passed:', key)
@@ -79,6 +84,25 @@ def ExecuteKey(key, num_times):
     logging.info('TIME[{}]Pressing {} Num Times: {}'.format(time.time(),
                                                             key_to_press,
                                                             num_times))
+
+
+def ExecuteKey(key, prev_key):
+    """
+    Holds down one of the keys to move (releasing the previous key if it's
+    different).
+    """
+    supported_keys = {0: 'left', 1: 'right', 2: ''}
+
+    if key not in supported_keys:
+        logging.error('Unexpected key passed:', key)
+
+    key_to_press = supported_keys[key]
+    if prev_key and prev_key != key_to_press:
+        pyautogui.keyUp(prev_key)
+    if key_to_press:
+        pyautogui.keyDown(key_to_press)
+    logging.info('TIME[{}] Moving {} '.format(time.time(), key_to_press))
+    return key_to_press
 
 
 def StartGame():
@@ -124,7 +148,7 @@ if __name__ == '__main__':
 
     print('Starting')
     # Between each call to pyautogui in seconds
-    pyautogui.PAUSE = 0.01
+    pyautogui.PAUSE = 0.0
     StartGame()
 
     loader = transforms.Compose([
@@ -135,8 +159,12 @@ if __name__ == '__main__':
     ])
 
     image_count = 0
+    prev_key = ''
     while True:
         image_count += 1
+
+        if image_count % 100 == 0 and gameOver():
+            StartGame()
         image_name = SCREENSHOT_DIR + str(image_count) + '.png'
         image = captureScreenshot(EXPECTED_REGION, image_name)
         image = imageLoader(image, loader)
@@ -147,7 +175,7 @@ if __name__ == '__main__':
         pred = output.argmax(dim=1, keepdim=True)
         print('Prediction:', pred)
         key, num_times = (pred[0][0].item(), 10)
-        ExecuteKey(key, num_times)
+        prev_key = ExecuteKey(key, prev_key)
 
         # TODO(kbaichoo): use a real rate limiter based on how long it takes
         # to process the file, etc..
