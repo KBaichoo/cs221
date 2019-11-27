@@ -9,6 +9,7 @@ def move_file(source_file, directory):
     moved_path = './test/' + directory + '/' + source_file
     shutil.move('./train/' + directory + '/' + source_file, moved_path)
 
+
 if __name__ == '__main__':
     relevant_dirs = ["left", "right", "stay"]
     for type_dir in relevant_dirs:
