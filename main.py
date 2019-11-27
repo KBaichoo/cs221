@@ -6,16 +6,25 @@ import logging
 import torch
 import time
 import pyautogui
-import subprocess
-import os
 from model import Net
 from torchvision import models, transforms
-
+# mss is significantly faster than using screencapture.
+import mss
+import mss.tools
+from PIL import Image
 
 
 SCREENSHOT_DIR = '/tmp/screenshots/'
-START_DELAY = 2
-EXPECTED_REGION = (0,50,750,450)
+START_DELAY = 1
+# Entire Game Region at lowest resolution.
+ENTIRE_GAME_REGION = (0, 50, 750, 450)
+
+# Game region training data is based upon.
+EXPECTED_REGION = (135, 170, 440, 365)
+EXPECTED_REGION = {'top': 120, 'left': 135, 'width': 440, 'height': 365}
+
+# TODO(kbaichoo): clean up the global.
+SCT = mss.mss()
 
 
 def captureScreenshot(region, filename):
@@ -31,10 +40,16 @@ def captureScreenshot(region, filename):
     Returns:
         The image object.
     """
+    global SCT
+    # Grab the data
+    img = SCT.grab(region)
+    # Transform to PIL to pass to the net
+    pil_img = Image.frombytes("RGB", img.size, img.bgra, "raw", "BGRX")
     if filename:
-        return pyautogui.screenshot(filename,region=region)
-    else:
-        return pyautogui.screenshot(region=region)
+        # Save to the picture file
+        mss.tools.to_png(img.rgb, img.size, output=filename)
+    return pil_img
+
 
 def outputMouseLocations():
     """
@@ -42,8 +57,9 @@ def outputMouseLocations():
     """
     while True:
         x, y = pyautogui.position()
-        print('X: {},Y: {}'.format(x,y))
+        print('X: {},Y: {}'.format(x, y))
         time.sleep(0.2)
+
 
 def ExecuteKey(key, num_times):
     """
@@ -61,26 +77,31 @@ def ExecuteKey(key, num_times):
     if key_to_press:
         pyautogui.press([key_to_press] * num_times)
     logging.info('TIME[{}]Pressing {} Num Times: {}'.format(time.time(),
-        key_to_press, num_times))
+                                                            key_to_press,
+                                                            num_times))
+
 
 def StartGame():
-    pyautogui.moveTo(200, 200, duration = 1)
+    pyautogui.moveTo(200, 200, duration=1)
     pyautogui.click(clicks=2, interval=1)
     pyautogui.press(['space'] * 2)
+
 
 def imageLoader(image, loader):
     image = loader(image).float()
     return image
-    #return image.cuda()
+    # return image.cuda()
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # TODO(kbaichoo): add arguments for directory to output images to,
     # path for model, region location, etc..
     parser.add_argument('--fps',
-            help='FPS between screenshots', type=int, required=True)
+                        help='FPS between screenshots', type=int,
+                        required=True)
     parser.add_argument('--model_file',
-            help='path to the model', required=True)
+                        help='path to the model', required=True)
 
     args = parser.parse_args()
     fps = args.fps
@@ -102,13 +123,13 @@ if __name__ == '__main__':
     time.sleep(START_DELAY)
 
     print('Starting')
-    # Between each call to pyautogui
-    pyautogui.PAUSE = 0.1
+    # Between each call to pyautogui in seconds
+    pyautogui.PAUSE = 0.01
     StartGame()
 
     loader = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),
-        transforms.Resize((64,64)),
+        transforms.Resize((64, 64)),
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,))
     ])
@@ -120,9 +141,10 @@ if __name__ == '__main__':
         image = captureScreenshot(EXPECTED_REGION, image_name)
         image = imageLoader(image, loader)
         image.unsqueeze_(0)
-        
-        output = model(image) 
-        pred = output.argmax(dim=1, keepdim=True) # get the index of the max log-probability
+
+        output = model(image)
+        # get the index of the max log-probability
+        pred = output.argmax(dim=1, keepdim=True)
         print('Prediction:', pred)
         key, num_times = (pred[0][0].item(), 10)
         ExecuteKey(key, num_times)
