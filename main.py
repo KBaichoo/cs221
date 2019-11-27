@@ -23,40 +23,6 @@ ENTIRE_GAME_REGION = (0, 50, 750, 450)
 EXPECTED_REGION = (135, 170, 440, 365)
 EXPECTED_REGION = {'top': 120, 'left': 135, 'width': 440, 'height': 365}
 
-# TODO(kbaichoo): clean up the global.
-SCT = mss.mss()
-
-
-def captureScreenshot(region, filename):
-    """
-    Calls captureScreenshot outputting it to a file if specified, otherwise
-    it's in memory.
-
-    Screenshot takes ~100mS, so can't get sub-granularity of this.
-
-    Args:
-        region - a 4 tuple (left, top, width, height)
-        filename - optional filename for the image if want to save it
-    Returns:
-        The image object.
-    """
-    global SCT
-    # Grab the data
-    img = SCT.grab(region)
-    # Transform to PIL to pass to the net
-    pil_img = Image.frombytes("RGB", img.size, img.bgra, "raw", "BGRX")
-    if filename:
-        # Save to the picture file
-        mss.tools.to_png(img.rgb, img.size, output=filename)
-    return pil_img
-
-
-def gameOver():
-    global SCT
-    # Test whether the top-right pixel is black (game going)
-    img = SCT.grab({'top': 52, 'left': 760, 'width': 1, 'height': 1})
-    return img.pixels[0] != (0, 0, 0)
-
 
 def outputMouseLocations():
     """
@@ -68,53 +34,123 @@ def outputMouseLocations():
         time.sleep(0.2)
 
 
-def ExecuteKeyPress(key, num_times):
-    """
-    Presses one of the supported keys (l,r,s) corresponding to left,right,None
-    num_times.
-    """
-    supported_keys = {0: 'left', 1: 'right', 2: ''}
+class Player:
+    def __init__(self, fps, model_file):
+        self.fps = fps
+        # Set up the model
+        self.model = Net()
+        self.model.load_state_dict(torch.load(args.model_file))
+        self.model.eval()
 
-    if key not in supported_keys:
-        logging.error('Unexpected key passed:', key)
+        self.sct = mss.mss()
+        # Stores the previous key pressed down
+        self.prev_key = ''
+        self.loader = transforms.Compose([
+            transforms.Grayscale(num_output_channels=1),
+            transforms.Resize((64, 64)),
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,))
+        ])
 
-    key_to_press = supported_keys[key]
-    if key_to_press:
-        pyautogui.press([key_to_press] * num_times)
-    logging.info('TIME[{}]Pressing {} Num Times: {}'.format(time.time(),
-                                                            key_to_press,
-                                                            num_times))
+    def capture_screenshot(self, region, filename):
+        """
+        Calls captureScreenshot outputting it to a file if specified, otherwise
+        it's in memory.
 
+        Screenshot takes ~100mS, so can't get sub-granularity of this.
 
-def ExecuteKey(key, prev_key):
-    """
-    Holds down one of the keys to move (releasing the previous key if it's
-    different).
-    """
-    supported_keys = {0: 'left', 1: 'right', 2: ''}
+        Args:
+            region - a 4 tuple (left, top, width, height)
+            filename - optional filename for the image if want to save it
+        Returns:
+            The image object.
+        """
+        # Grab the data
+        img = self.sct.grab(region)
+        # Transform to PIL to pass to the net
+        pil_img = Image.frombytes("RGB", img.size, img.bgra, "raw", "BGRX")
+        if filename:
+            # Save to the picture file
+            mss.tools.to_png(img.rgb, img.size, output=filename)
+        return pil_img
 
-    if key not in supported_keys:
-        logging.error('Unexpected key passed:', key)
+    def gameover(self):
+        # Test whether the top-right pixel is black (game going)
+        img = self.sct.grab({'top': 52, 'left': 760, 'width': 1, 'height': 1})
+        return img.pixels[0] != (0, 0, 0)
 
-    key_to_press = supported_keys[key]
-    if prev_key and prev_key != key_to_press:
-        pyautogui.keyUp(prev_key)
-    if key_to_press:
-        pyautogui.keyDown(key_to_press)
-    logging.info('TIME[{}] Moving {} '.format(time.time(), key_to_press))
-    return key_to_press
+    def execute_key_press(self, key, num_times):
+        """
+        Presses one of the supported keys (l,r,s) corresponding to left,right,
+        None num_times.
+        """
+        supported_keys = {0: 'left', 1: 'right', 2: ''}
 
+        if key not in supported_keys:
+            logging.error('Unexpected key passed:', key)
 
-def StartGame():
-    pyautogui.moveTo(200, 200, duration=1)
-    pyautogui.click(clicks=2, interval=1)
-    pyautogui.press(['space'] * 2)
+        key_to_press = supported_keys[key]
+        if key_to_press:
+            pyautogui.press([key_to_press] * num_times)
+        logging.info('TIME[{}]Pressing {} Num Times: {}'.format(time.time(),
+                                                                key_to_press,
+                                                                num_times))
 
+    def execute_key(self, key):
+        """
+        Holds down one of the keys to move (releasing the previous key if it's
+        different).
+        """
+        supported_keys = {0: 'left', 1: 'right', 2: ''}
+        # TODO(kbaichoo): save the key presses to the obj;
+        # might want to store other stats i.e. game play info (buttons, times, etc..)
+        if key not in supported_keys:
+            logging.error('Unexpected key passed:', key)
 
-def imageLoader(image, loader):
-    image = loader(image).float()
-    return image
-    # return image.cuda()
+        key_to_press = supported_keys[key]
+        if self.prev_key and self.prev_key != key_to_press:
+            pyautogui.keyUp(self.prev_key)
+        if key_to_press:
+            pyautogui.keyDown(key_to_press)
+        logging.info('TIME[{}] Moving {} '.format(time.time(), key_to_press))
+        self.prev_key = key_to_press
+
+    def start_game(self):
+        logging.info('\nStarting the Game\n')
+        pyautogui.moveTo(200, 200, duration=1)
+        pyautogui.click(clicks=2, interval=1)
+        pyautogui.press(['space'] * 2)
+
+    def _image_loader(self, image):
+        # TODO(kbaichoo): support cuda.
+        image = self.loader(image).float()
+        return image
+        # return image.cuda()
+
+    def play_game(self):
+        """
+        Plays a single game of SuperHexagon.
+        """
+        image_count = 0
+        start_time = time.time()
+        self.start_game()
+        # TODO(kbaichoo): use a real rate limiter based on how long it takes
+        # to process the file, etc..
+        while True:
+            image_count += 1
+
+            if image_count % 100 == 0 and self.gameover():
+                break
+            image_name = SCREENSHOT_DIR + str(image_count) + '.png'
+            image = self.capture_screenshot(EXPECTED_REGION, image_name)
+            image = self._image_loader(image)
+            image.unsqueeze_(0)
+
+            output = self.model(image)
+            # get the index of the max log-probability
+            pred = output.argmax(dim=1, keepdim=True)
+            self.execute_key(pred.item())
+        logging.info('Game ended after %d seconds', time.time() - start_time)
 
 
 if __name__ == '__main__':
@@ -135,47 +171,16 @@ if __name__ == '__main__':
 
     logging.getLogger().setLevel(logging.INFO)
 
-    # Set up the model
-    model = Net()
-    model.load_state_dict(torch.load(args.model_file))
-    model.eval()
-
-    print('Launched grab_screenshot.py...')
+    print('Launched main.py...')
     print('Waiting for {} seconds before beginning'.format(START_DELAY))
     if SCREENSHOT_DIR:
         print('screenshots to directory: {}'.format(SCREENSHOT_DIR))
     time.sleep(START_DELAY)
 
-    print('Starting')
     # Between each call to pyautogui in seconds
     pyautogui.PAUSE = 0.0
-    StartGame()
 
-    loader = transforms.Compose([
-        transforms.Grayscale(num_output_channels=1),
-        transforms.Resize((64, 64)),
-        transforms.ToTensor(),
-        transforms.Normalize((0.1307,), (0.3081,))
-    ])
-
-    image_count = 0
-    prev_key = ''
-    while True:
-        image_count += 1
-
-        if image_count % 100 == 0 and gameOver():
-            StartGame()
-        image_name = SCREENSHOT_DIR + str(image_count) + '.png'
-        image = captureScreenshot(EXPECTED_REGION, image_name)
-        image = imageLoader(image, loader)
-        image.unsqueeze_(0)
-
-        output = model(image)
-        # get the index of the max log-probability
-        pred = output.argmax(dim=1, keepdim=True)
-        print('Prediction:', pred)
-        key, num_times = (pred[0][0].item(), 10)
-        prev_key = ExecuteKey(key, prev_key)
-
-        # TODO(kbaichoo): use a real rate limiter based on how long it takes
-        # to process the file, etc..
+    player = Player(args.fps, args.model_file)
+    # TODO(kbaichoo): add a reset function for player class after games,
+    # and a method to play N games.
+    player.play_game()
