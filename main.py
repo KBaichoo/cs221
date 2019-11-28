@@ -51,6 +51,9 @@ class Player:
             transforms.ToTensor(),
             transforms.Normalize((0.1307,), (0.3081,))
         ])
+        # Stores the game status of past games.
+        self.history = []
+        self.current_status = None
 
     def capture_screenshot(self, region, filename):
         """
@@ -102,8 +105,6 @@ class Player:
         different).
         """
         supported_keys = {0: 'left', 1: 'right', 2: ''}
-        # TODO(kbaichoo): save the key presses to the obj;
-        # might want to store other stats i.e. game play info (buttons, times, etc..)
         if key not in supported_keys:
             logging.error('Unexpected key passed:', key)
 
@@ -122,10 +123,25 @@ class Player:
         pyautogui.press(['space'] * 2)
 
     def _image_loader(self, image):
+        """
+        Use to load the image into a tensor using our loader.
+        """
         # TODO(kbaichoo): support cuda.
         image = self.loader(image).float()
         return image
         # return image.cuda()
+
+    def clear_game(self):
+        """
+        Resets the agent to the state prior it payed the game.
+        Stores the game results in the history.
+        """
+        if self.prev_key != '':
+            pyautogui.keyUp(self.prev_key)
+        # Store the game status
+        if self.current_status:
+            self.history.append(self.current_status)
+        self.current_status = None
 
     def play_game(self):
         """
@@ -133,13 +149,15 @@ class Player:
         """
         image_count = 0
         start_time = time.time()
+        stats = GameStats()
         self.start_game()
         # TODO(kbaichoo): use a real rate limiter based on how long it takes
         # to process the file, etc..
         while True:
             image_count += 1
 
-            if image_count % 100 == 0 and self.gameover():
+            # Test whether the game is over.
+            if image_count % 50 == 0 and self.gameover():
                 break
             image_name = SCREENSHOT_DIR + str(image_count) + '.png'
             image = self.capture_screenshot(EXPECTED_REGION, image_name)
@@ -149,8 +167,33 @@ class Player:
             output = self.model(image)
             # get the index of the max log-probability
             pred = output.argmax(dim=1, keepdim=True)
+            stats.predictions[pred.item()] += 1
             self.execute_key(pred.item())
-        logging.info('Game ended after %d seconds', time.time() - start_time)
+        # Save the stats for this run
+        end_time = time.time()
+        stats.game_time = end_time - start_time
+        self.current_status = stats
+        logging.info('Game ended after %d seconds', stats.game_time)
+
+    def play_games(self, n):
+        """
+        Plays n games, returning all stats for the games played.
+        """
+        self.clear_game()
+        self.history = []
+
+        for i in range(n):
+            logging.info('\nPlaying Game {} of {}\n'.format(i, n))
+            self.play_game()
+            self.clear_game()
+        return self.history
+
+
+class GameStats:
+    def __init__(self):
+        self.game_time = 0
+        # Keep an array of num times we predicted that value
+        self.predictions = [0] * 3
 
 
 if __name__ == '__main__':
@@ -181,6 +224,7 @@ if __name__ == '__main__':
     pyautogui.PAUSE = 0.0
 
     player = Player(args.fps, args.model_file)
-    # TODO(kbaichoo): add a reset function for player class after games,
-    # and a method to play N games.
-    player.play_game()
+    stats = player.play_games(10)
+    for stat in stats:
+        print('left | right | stay')
+        print(stat.predictions)
