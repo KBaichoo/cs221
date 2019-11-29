@@ -79,8 +79,8 @@ class Player:
 
     def gameover(self):
         # Test whether the top-right pixel is black (game going)
-        img = self.sct.grab({'top': 52, 'left': 760, 'width': 1, 'height': 1})
-        return img.pixels[0] != (0, 0, 0)
+        img = self.sct.grab({'top': 70, 'left': 765, 'width': 1, 'height': 1})
+        return img.pixels[0][0] != (0, 0, 0)
 
     def execute_key_press(self, key, num_times):
         """
