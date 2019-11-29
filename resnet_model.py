@@ -9,11 +9,13 @@ import torchvision
 import matplotlib.pyplot as plt
 import numpy as np
 
-weights = [0] * 1000
-weights[0] = 0.23
-weights[1] = 0.30
-weights[2] = 0.47
-ce_loss = torch.nn.CrossEntropyLoss(size_average=False, weight=torch.FloatTensor(weights).cuda())
+# weights = [0] * 1000
+# weights[0] = 0.23
+# weights[1] = 0.30
+# weights[2] = 0.47
+# ce_loss = torch.nn.CrossEntropyLoss(size_average=False, weight=torch.FloatTensor(weights).cuda())
+
+ce_loss = torch.nn.CrossEntropyLoss(size_average=False)
 
 def train(args, model, device, train_loader, optimizer, epoch):
     model.train()
