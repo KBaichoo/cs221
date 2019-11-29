@@ -126,7 +126,7 @@ def main():
     train_loader = torch.utils.data.DataLoader(
             datasets.ImageFolder('./frames/train/',
                        transform=transforms.Compose([
-                           # transforms.Grayscale(num_output_channels=3),
+                           transforms.Grayscale(num_output_channels=3),
                            transforms.Resize((256,256)),
                            transforms.ToTensor(),
                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -135,7 +135,7 @@ def main():
     validation_loader = torch.utils.data.DataLoader(
             datasets.ImageFolder('./frames/validation/',
                        transform=transforms.Compose([
-                           # transforms.Grayscale(num_output_channels=3),
+                           transforms.Grayscale(num_output_channels=3),
                            transforms.Resize((256,256)),
                            transforms.ToTensor(),
                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -145,7 +145,7 @@ def main():
     test_loader = torch.utils.data.DataLoader(
             datasets.ImageFolder('./frames/test/',
                        transform=transforms.Compose([
-                           # transforms.Grayscale(num_output_channels=3),
+                           transforms.Grayscale(num_output_channels=3),
                            transforms.Resize((256,256)),
                            transforms.ToTensor(),
                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -163,10 +163,11 @@ def main():
 
     print("Best validation loss: {}%".format(best_loss_percentage))
 
-    test(args, model, device, test_loader)
-
     if (args.save_model):
         torch.save(model.state_dict(),"resnet.pt")
+
+    test(args, model, device, test_loader)
+
 
 if __name__ == '__main__':
     main()
