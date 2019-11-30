@@ -8,9 +8,9 @@ from torchvision import datasets, transforms
 import torchvision
 import matplotlib.pyplot as plt
 import numpy as np
+from model import Net
 
 ce_loss = torch.nn.CrossEntropyLoss(size_average=False)
-
 
 
 def imshow(img):
@@ -18,6 +18,7 @@ def imshow(img):
     npimg = img.cpu().numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
+
 
 def main():
     # Training settings
@@ -40,7 +41,11 @@ def main():
                         help='random seed (default: 1)')
     parser.add_argument('--log-interval', type=int, default=10, metavar='N',
                         help='how many batches to wait before logging training status')
+    parser.add_argument('--model_file',
+                        help='path to the model to test', required=True)
 
+    parser.add_argument('--mnist', action='store_true', default=False,
+                        help='use mnist arch')
     parser.add_argument('--save-model', action='store_true', default=False,
                         help='For Saving the current Model')
     args = parser.parse_args()
@@ -51,20 +56,26 @@ def main():
     kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
 
     test_loader = torch.utils.data.DataLoader(
-            datasets.ImageFolder('./frames/test/',
-                       transform=transforms.Compose([
-                           transforms.Grayscale(num_output_channels=3),
-                           transforms.Resize((256,256)),
-                           transforms.ToTensor(),
-                           transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                       ])),
+        datasets.ImageFolder('./frames/test/',
+                             transform=transforms.Compose([
+                                 transforms.Grayscale(num_output_channels=3),
+                                 transforms.Resize((256, 256)),
+                                 transforms.ToTensor(),
+                                 transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[
+                                     0.229, 0.224, 0.225])
+                             ])),
         batch_size=args.test_batch_size, shuffle=False, **kwargs)
 
     classes = ('left', 'right', 'stay')
 
-    device = torch.device("cuda")
-    model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet50', pretrained=False).to(device)
-    model.load_state_dict(torch.load('./resnet50.pt'))
+    if args.mnist:
+        model = Net()
+        model.load_state_dict(torch.load(args.model_file))
+    else:
+        model = torch.hub.load('pytorch/vision:v0.4.2',
+                               'resnet50', pretrained=False).to(device)
+        model.load_state_dict(torch.load('./resnet50.pt'))
+
     model.eval()
 
     # left_total = 0
@@ -84,8 +95,8 @@ def main():
                 data, target = data.to(device), target.to(device)
                 output = model(data)
                 test_loss += ce_loss(output, target)
-                pred = output.argmax(dim=1, keepdim=True) # get the index of the max log-probability
-
+                # get the index of the max log-probability
+                pred = output.argmax(dim=1, keepdim=True)
 
                 _, predicted = torch.max(output, 1)
 
@@ -105,9 +116,10 @@ def main():
                 #         stay_correct += 1
 
                 if classes[target[0]] != classes[predicted[0]]:
-                    print('GroundTruth: ', ' '.join('%5s' % classes[target[j]] for j in range(1)))
+                    print('GroundTruth: ', ' '.join('%5s' %
+                                                    classes[target[j]] for j in range(1)))
                     print('Predicted: ', ' '.join('%5s' % classes[predicted[j]]
-                                      for j in range(1)))
+                                                  for j in range(1)))
                     imshow(torchvision.utils.make_grid(data))
                 correct += pred.eq(target.view_as(pred)).sum().item()
 
@@ -122,6 +134,7 @@ def main():
     print('left accuracy: ', left_correct/left_total)
     print('right accuracy: ', right_correct/right_total)
     print('stay accuracy: ', stay_correct/stay_total)
+
 
 if __name__ == '__main__':
     main()
