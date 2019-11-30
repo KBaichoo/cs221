@@ -9,11 +9,13 @@ import torchvision
 import matplotlib.pyplot as plt
 import numpy as np
 
-weights = [0] * 1000
-weights[0] = 0.23
-weights[1] = 0.30
-weights[2] = 0.47
-ce_loss = torch.nn.CrossEntropyLoss(size_average=False, weight=torch.FloatTensor(weights).cuda())
+# weights = [0] * 1000
+# weights[0] = 0.23
+# weights[1] = 0.30
+# weights[2] = 0.47
+# ce_loss = torch.nn.CrossEntropyLoss(size_average=False, weight=torch.FloatTensor(weights).cuda())
+
+ce_loss = torch.nn.CrossEntropyLoss(size_average=False)
 
 def train(args, model, device, train_loader, optimizer, epoch):
     model.train()
@@ -97,7 +99,7 @@ def main():
                         help='input batch size for validation (default: )')
     parser.add_argument('--test-batch-size', type=int, default=64, metavar='N',
                         help='input batch size for testing (default: )')
-    parser.add_argument('--epochs', type=int, default=150, metavar='N',
+    parser.add_argument('--epochs', type=int, default=250, metavar='N',
                         help='number of epochs to train (default: 5)')
     parser.add_argument('--lr', type=float, default=0.00001, metavar='LR',
                         help='learning rate (default: 0.01)')
@@ -124,7 +126,7 @@ def main():
     train_loader = torch.utils.data.DataLoader(
             datasets.ImageFolder('./frames/train/',
                        transform=transforms.Compose([
-                           # transforms.Grayscale(num_output_channels=3),
+                           transforms.Grayscale(num_output_channels=3),
                            transforms.Resize((256,256)),
                            transforms.ToTensor(),
                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -133,7 +135,7 @@ def main():
     validation_loader = torch.utils.data.DataLoader(
             datasets.ImageFolder('./frames/validation/',
                        transform=transforms.Compose([
-                           # transforms.Grayscale(num_output_channels=3),
+                           transforms.Grayscale(num_output_channels=3),
                            transforms.Resize((256,256)),
                            transforms.ToTensor(),
                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -143,7 +145,7 @@ def main():
     test_loader = torch.utils.data.DataLoader(
             datasets.ImageFolder('./frames/test/',
                        transform=transforms.Compose([
-                           # transforms.Grayscale(num_output_channels=3),
+                           transforms.Grayscale(num_output_channels=3),
                            transforms.Resize((256,256)),
                            transforms.ToTensor(),
                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -161,10 +163,11 @@ def main():
 
     print("Best validation loss: {}%".format(best_loss_percentage))
 
-    test(args, model, device, test_loader)
-
     if (args.save_model):
         torch.save(model.state_dict(),"resnet.pt")
+
+    test(args, model, device, test_loader)
+
 
 if __name__ == '__main__':
     main()
