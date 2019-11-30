@@ -99,7 +99,7 @@ def main():
                         help='input batch size for validation (default: )')
     parser.add_argument('--test-batch-size', type=int, default=64, metavar='N',
                         help='input batch size for testing (default: )')
-    parser.add_argument('--epochs', type=int, default=250, metavar='N',
+    parser.add_argument('--epochs', type=int, default=100, metavar='N',
                         help='number of epochs to train (default: 5)')
     parser.add_argument('--lr', type=float, default=0.00001, metavar='LR',
                         help='learning rate (default: 0.01)')
@@ -128,6 +128,7 @@ def main():
                        transform=transforms.Compose([
                            transforms.Grayscale(num_output_channels=3),
                            transforms.Resize((256,256)),
+                           transforms.RandomRotation(180),
                            transforms.ToTensor(),
                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                        ])),
@@ -152,19 +153,24 @@ def main():
                        ])),
         batch_size=args.test_batch_size, shuffle=True, **kwargs)
 
-    model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet18', pretrained=False).to(device)
+    model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet50', pretrained=False).to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
 
     best_loss_percentage = -1
+    # old_best_loss_percentage = -1
 
     for epoch in range(1, args.epochs + 1):
         train(args, model, device, train_loader, optimizer, epoch)
         best_loss_percentage = validation(args, model, device, validation_loader, best_loss_percentage)
+        # if best_loss_percentage > old_best_loss_percentage:
+        #     old_best_loss_percentage = best_loss_percentage
+        #     if (args.save_model):
+        #         torch.save(model.state_dict(),"resnet50.pt")
 
     print("Best validation loss: {}%".format(best_loss_percentage))
 
     if (args.save_model):
-        torch.save(model.state_dict(),"resnet.pt")
+        torch.save(model.state_dict(),"resnet50.pt")
 
     test(args, model, device, test_loader)
 
