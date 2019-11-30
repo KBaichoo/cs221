@@ -69,6 +69,27 @@ def train(args, model, device, train_loader, optimizer, epoch):
                 100. * batch_idx / len(train_loader), loss.item()))
 
 
+def validation(args, model, device, validation_loader):
+    model.eval()
+    validation_loss = 0
+    correct = 0
+    with torch.no_grad():
+        for data, target in validation_loader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            # sum up batch loss
+            validation_loss += F.nll_loss(output, target, reduction='sum').item()
+            # get the index of the max log-probability
+            pred = output.argmax(dim=1, keepdim=True)
+            # print(pred)
+            correct += pred.eq(target.view_as(pred)).sum().item()
+
+    validation_loss /= len(validation_loader.dataset)
+
+    print('\nvalidation set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+        validation_loss, correct, len(validation_loader.dataset),
+        100. * correct / len(validation_loader.dataset)))
+
 def test(args, model, device, test_loader):
     model.eval()
     test_loss = 0
@@ -81,12 +102,12 @@ def test(args, model, device, test_loader):
             test_loss += F.nll_loss(output, target, reduction='sum').item()
             # get the index of the max log-probability
             pred = output.argmax(dim=1, keepdim=True)
-            print(pred)
+            # print(pred)
             correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_loss /= len(test_loader.dataset)
 
-    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+    print('\ntest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
 
@@ -108,8 +129,8 @@ def main():
     parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
     parser.add_argument('--batch-size', type=int, default=8, metavar='N',
                         help='input batch size for training (default: )')
-    parser.add_argument('--test-batch-size', type=int, default=1, metavar='N',
-                        help='input batch size for testing (default: )')
+    parser.add_argument('--validation-batch-size', type=int, default=1, metavar='N',
+                        help='input batch size for validationing (default: )')
     parser.add_argument('--epochs', type=int, default=5, metavar='N',
                         help='number of epochs to train (default: 5)')
     parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
@@ -150,6 +171,15 @@ def main():
                                  transforms.Normalize((0.1307,), (0.3081,))
                              ])),
         batch_size=args.batch_size, shuffle=True, **kwargs)
+    validation_loader = torch.utils.data.DataLoader(
+        datasets.ImageFolder('./frames/validation/',
+                             transform=transforms.Compose([
+                                 transforms.Grayscale(num_output_channels=1),
+                                 transforms.Resize((64, 64)),
+                                 transforms.ToTensor(),
+                                 transforms.Normalize((0.1307,), (0.3081,))
+                             ])),
+        batch_size=args.validation_batch_size, shuffle=True, **kwargs)
     test_loader = torch.utils.data.DataLoader(
         datasets.ImageFolder('./frames/test/',
                              transform=transforms.Compose([
@@ -158,7 +188,7 @@ def main():
                                  transforms.ToTensor(),
                                  transforms.Normalize((0.1307,), (0.3081,))
                              ])),
-        batch_size=args.test_batch_size, shuffle=True, **kwargs)
+        batch_size=args.validation_batch_size, shuffle=True, **kwargs)
 
     model = Net().to(device)
     optimizer = optim.SGD(model.parameters(), lr=args.lr,
@@ -166,11 +196,12 @@ def main():
 
     for epoch in range(1, args.epochs + 1):
         train(args, model, device, train_loader, optimizer, epoch)
-        test(args, model, device, test_loader)
+        validation(args, model, device, validation_loader)
 
     if (args.save_model):
         torch.save(model.state_dict(), "mnist_cnn.pt")
 
+    test(args, model, device, test_loader)
 
 if __name__ == '__main__':
     main()
