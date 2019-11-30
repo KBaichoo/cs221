@@ -36,7 +36,8 @@ class Net(nn.Module):
 
 
 def imshow(img):
-    img = (img * 0.3081) + 0.1307     # unnormalize
+    img = img * 255
+    # img = (img * 0.3081) + 0.1307     # unnormalize
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
@@ -78,7 +79,8 @@ def validation(args, model, device, validation_loader):
             data, target = data.to(device), target.to(device)
             output = model(data)
             # sum up batch loss
-            validation_loss += F.nll_loss(output, target, reduction='sum').item()
+            validation_loss += F.nll_loss(output,
+                                          target, reduction='sum').item()
             # get the index of the max log-probability
             pred = output.argmax(dim=1, keepdim=True)
             # print(pred)
@@ -89,6 +91,7 @@ def validation(args, model, device, validation_loader):
     print('\nvalidation set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         validation_loss, correct, len(validation_loader.dataset),
         100. * correct / len(validation_loader.dataset)))
+
 
 def test(args, model, device, test_loader):
     model.eval()
@@ -110,6 +113,18 @@ def test(args, model, device, test_loader):
     print('\ntest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
+
+
+class Binarize(object):
+    """Applies Laplacian. Args - kernel size."""
+
+    def __init__(self, threshold):
+        self.threshold = threshold
+
+    def __call__(self, sample):
+        y = torch.zeros(sample.size())
+        x = torch.ones(sample.size())
+        return torch.where(sample > self.threshold, x, y)
 
 
 class Laplace(object):
@@ -168,7 +183,8 @@ def main():
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
                                  transforms.ToTensor(),
-                                 transforms.Normalize((0.1307,), (0.3081,))
+                                 transforms.Normalize((0.1307,), (0.3081,)),
+                                 Binarize(0.2165)
                              ])),
         batch_size=args.batch_size, shuffle=True, **kwargs)
     validation_loader = torch.utils.data.DataLoader(
@@ -177,7 +193,8 @@ def main():
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
                                  transforms.ToTensor(),
-                                 transforms.Normalize((0.1307,), (0.3081,))
+                                 transforms.Normalize((0.1307,), (0.3081,)),
+                                 Binarize(0.2165)
                              ])),
         batch_size=args.validation_batch_size, shuffle=True, **kwargs)
     test_loader = torch.utils.data.DataLoader(
@@ -186,7 +203,8 @@ def main():
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
                                  transforms.ToTensor(),
-                                 transforms.Normalize((0.1307,), (0.3081,))
+                                 transforms.Normalize((0.1307,), (0.3081,)),
+                                 Binarize(0.2165)
                              ])),
         batch_size=args.validation_batch_size, shuffle=True, **kwargs)
 
@@ -202,6 +220,7 @@ def main():
         torch.save(model.state_dict(), "mnist_cnn.pt")
 
     test(args, model, device, test_loader)
+
 
 if __name__ == '__main__':
     main()
