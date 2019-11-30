@@ -130,14 +130,19 @@ def main():
     torch.manual_seed(args.seed)
 
     device = torch.device("cuda" if use_cuda else "cpu")
+    if use_cuda:
+        print('using cuda')
+    else:
+        print('no cuda...')
 
-    kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
+    kwargs = {'num_workers': 8, 'pin_memory': True} if use_cuda else {}
 
     train_loader = torch.utils.data.DataLoader(
         datasets.ImageFolder('./frames/train/',
                              transform=transforms.Compose([
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
+                                 transforms.RandomRotation(180),
                                  transforms.ToTensor(),
                                  Laplace(5),
                                  transforms.Normalize((0.1307,), (0.3081,))
@@ -148,6 +153,7 @@ def main():
                              transform=transforms.Compose([
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
+                                 transforms.RandomRotation(180),
                                  transforms.ToTensor(),
                                  Laplace(5),
                                  transforms.Normalize((0.1307,), (0.3081,))
