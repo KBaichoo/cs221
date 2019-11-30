@@ -36,7 +36,7 @@ class Net(nn.Module):
 
 
 def imshow(img):
-    img = img / 2 + 0.5     # unnormalize
+    img = (img * 0.3081) + 0.1307     # unnormalize
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
@@ -47,7 +47,7 @@ def train(args, model, device, train_loader, optimizer, epoch):
     dataiter = iter(train_loader)
 
     """
-    for i in range(15):
+    for i in range(50):
         images, labels = dataiter.next()
 
         # show images
@@ -137,14 +137,15 @@ def main():
 
     kwargs = {'num_workers': 8, 'pin_memory': True} if use_cuda else {}
 
+    # TODO(kbaichoo): should remove random rotation from test + from
+    # training (b/c exhaustive); further use validation.
+    # TODO(kbaichoo): add back normalization / fix the imshow func.
     train_loader = torch.utils.data.DataLoader(
         datasets.ImageFolder('./frames/train/',
                              transform=transforms.Compose([
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
-                                 transforms.RandomRotation(180),
                                  transforms.ToTensor(),
-                                 Laplace(5),
                                  transforms.Normalize((0.1307,), (0.3081,))
                              ])),
         batch_size=args.batch_size, shuffle=True, **kwargs)
@@ -153,9 +154,7 @@ def main():
                              transform=transforms.Compose([
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
-                                 transforms.RandomRotation(180),
                                  transforms.ToTensor(),
-                                 Laplace(5),
                                  transforms.Normalize((0.1307,), (0.3081,))
                              ])),
         batch_size=args.test_batch_size, shuffle=True, **kwargs)

@@ -39,7 +39,12 @@ class Player:
         self.fps = fps
         # Set up the model
         self.model = Net()
-        self.model.load_state_dict(torch.load(args.model_file))
+        if torch.cuda.is_available():
+            def map_location(storage, loc): return storage.cuda()
+        else:
+            map_location = 'cpu'
+        self.model.load_state_dict(torch.load(
+            args.model_file, map_location=map_location))
         self.model.eval()
 
         self.sct = mss.mss()
