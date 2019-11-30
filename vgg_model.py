@@ -31,16 +31,19 @@ data_transforms = {
         # Data augmentation is a good practice for the train set
         # Here, we randomly crop the image to 224x224 and
         # randomly flip it horizontally.
+        transforms.Grayscale(num_output_channels=1),
         transforms.RandomResizedCrop(224),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
     ]),
     VAL: transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),
         transforms.Resize(256),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
     ]),
     TEST: transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),
         transforms.Resize(256),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
