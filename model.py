@@ -4,6 +4,7 @@
 
 from __future__ import print_function
 import argparse
+import kornia
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -34,7 +35,25 @@ class Net(nn.Module):
         return F.log_softmax(x, dim=1)
 
 
+def imshow(img):
+    img = img / 2 + 0.5     # unnormalize
+    npimg = img.numpy()
+    plt.imshow(np.transpose(npimg, (1, 2, 0)))
+    plt.show()
+
+
 def train(args, model, device, train_loader, optimizer, epoch):
+    # get some random training images
+    dataiter = iter(train_loader)
+
+    """
+    for i in range(15):
+        images, labels = dataiter.next()
+
+        # show images
+        imshow(torchvision.utils.make_grid(images))
+    """
+
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
         data, target = data.to(device), target.to(device)
@@ -69,6 +88,18 @@ def test(args, model, device, test_loader):
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
+
+
+class Laplace(object):
+    """Applies Laplacian. Args - kernel size."""
+
+    def __init__(self, ksize):
+        self.ksize = ksize
+        self.laplace = kornia.filters.Laplacian(ksize)
+
+    def __call__(self, sample):
+        img = torch.unsqueeze(sample, dim=0)
+        return torch.squeeze(self.laplace(img), dim=0)
 
 
 def main():
@@ -108,6 +139,7 @@ def main():
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
                                  transforms.ToTensor(),
+                                 Laplace(5),
                                  transforms.Normalize((0.1307,), (0.3081,))
                              ])),
         batch_size=args.batch_size, shuffle=True, **kwargs)
@@ -117,25 +149,10 @@ def main():
                                  transforms.Grayscale(num_output_channels=1),
                                  transforms.Resize((64, 64)),
                                  transforms.ToTensor(),
+                                 Laplace(5),
                                  transforms.Normalize((0.1307,), (0.3081,))
                              ])),
         batch_size=args.test_batch_size, shuffle=True, **kwargs)
-
-    '''
-    def imshow(img):
-        img = img / 2 + 0.5     # unnormalize
-        npimg = img.numpy()
-        plt.imshow(np.transpose(npimg, (1, 2, 0)))
-        plt.show()
-
-
-    # get some random training images
-    dataiter = iter(train_loader)
-    images, labels = dataiter.next()
-
-    # show images
-    imshow(torchvision.utils.make_grid(images))
-    '''
 
     model = Net().to(device)
     optimizer = optim.SGD(model.parameters(), lr=args.lr,
