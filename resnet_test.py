@@ -6,6 +6,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 import torchvision
+from model import Net
 import matplotlib.pyplot as plt
 import numpy as np
 from model import Net
@@ -78,14 +79,15 @@ def main():
 
     model.eval()
 
-    # left_total = 0
-    # left_correct = 0
-    # right_total = 0
-    # right_correct = 0
-    # stay_total = 0
-    # stay_correct = 0
-
     def test(args, model, device, test_loader, classes):
+
+        left_total = 0
+        left_correct = 0
+        right_total = 0
+        right_correct = 0
+        stay_total = 0
+        stay_correct = 0
+
         model.eval()
         test_loss = 0
         correct = 0
@@ -100,28 +102,31 @@ def main():
 
                 _, predicted = torch.max(output, 1)
 
-                # if classes[target[0]] == 'left':
-                #     left_total += 1
-                #     if classes[predicted[0]] == 'left':
-                #         left_correct += 1
-                #
-                # if classes[target[0]] == 'right':
-                #     right_total += 1
-                #     if classes[predicted[0]] == 'right':
-                #         right_correct += 1
-                #
-                # if classes[target[0]] == 'stay':
-                #     stay_total += 1
-                #     if classes[predicted[0]] == 'stay':
-                #         stay_correct += 1
+                if classes[target[0]] == 'left':
+                    left_total += 1
+                    if classes[predicted[0]] == 'left':
+                        left_correct += 1
 
-                if classes[target[0]] != classes[predicted[0]]:
-                    print('GroundTruth: ', ' '.join('%5s' %
-                                                    classes[target[j]] for j in range(1)))
-                    print('Predicted: ', ' '.join('%5s' % classes[predicted[j]]
-                                                  for j in range(1)))
-                    imshow(torchvision.utils.make_grid(data))
+                if classes[target[0]] == 'right':
+                    right_total += 1
+                    if classes[predicted[0]] == 'right':
+                        right_correct += 1
+
+                if classes[target[0]] == 'stay':
+                    stay_total += 1
+                    if classes[predicted[0]] == 'stay':
+                        stay_correct += 1
+
+                # if classes[target[0]] != classes[predicted[0]]:
+                #     print('GroundTruth: ', ' '.join('%5s' % classes[target[j]] for j in range(1)))
+                #     print('Predicted: ', ' '.join('%5s' % classes[predicted[j]]
+                #                       for j in range(1)))
+                #     imshow(torchvision.utils.make_grid(data))
                 correct += pred.eq(target.view_as(pred)).sum().item()
+
+        print('left accuracy: ', left_correct/left_total)
+        print('right accuracy: ', right_correct/right_total)
+        print('stay accuracy: ', stay_correct/stay_total)
 
         test_loss /= len(test_loader.dataset)
 
@@ -130,10 +135,6 @@ def main():
             100. * correct / len(test_loader.dataset)))
 
     test(args, model, device, test_loader, classes)
-
-    print('left accuracy: ', left_correct/left_total)
-    print('right accuracy: ', right_correct/right_total)
-    print('stay accuracy: ', stay_correct/stay_total)
 
 
 if __name__ == '__main__':
