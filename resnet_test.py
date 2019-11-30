@@ -11,7 +11,7 @@ import numpy as np
 
 ce_loss = torch.nn.CrossEntropyLoss(size_average=False)
 
-def test(args, model, device, test_loader):
+def test(args, model, device, test_loader, classes):
     model.eval()
     test_loss = 0
     correct = 0
@@ -23,7 +23,14 @@ def test(args, model, device, test_loader):
             test_loss += ce_loss(output, target)
             pred = output.argmax(dim=1, keepdim=True) # get the index of the max log-probability
 
-            print(pred, target)
+
+            _, predicted = torch.max(output, 1)
+
+            if classes[target[0]] != classes[predicted[0]]:
+                print('GroundTruth: ', ' '.join('%5s' % classes[target[j]] for j in range(1)))
+                print('Predicted: ', ' '.join('%5s' % classes[predicted[j]]
+                                  for j in range(1)))
+                imshow(torchvision.utils.make_grid(data))
             correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_loss /= len(test_loader.dataset)
@@ -34,7 +41,7 @@ def test(args, model, device, test_loader):
 
 def imshow(img):
     img = img / 2 + 0.5     # unnormalize
-    npimg = img.numpy()
+    npimg = img.cpu().numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
@@ -45,7 +52,7 @@ def main():
                         help='input batch size for training (default: )')
     parser.add_argument('--validation-batch-size', type=int, default=64, metavar='N',
                         help='input batch size for validation (default: )')
-    parser.add_argument('--test-batch-size', type=int, default=64, metavar='N',
+    parser.add_argument('--test-batch-size', type=int, default=1, metavar='N',
                         help='input batch size for testing (default: )')
     parser.add_argument('--epochs', type=int, default=250, metavar='N',
                         help='number of epochs to train (default: 5)')
@@ -77,14 +84,16 @@ def main():
                            transforms.ToTensor(),
                            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                        ])),
-        batch_size=args.test_batch_size, shuffle=True, **kwargs)
+        batch_size=args.test_batch_size, shuffle=False, **kwargs)
+
+    classes = ('left', 'right', 'stay')
 
     device = torch.device("cuda")
     model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet18', pretrained=False).to(device)
     model.load_state_dict(torch.load('./resnet.pt'))
     model.eval()
 
-    test(args, model, device, test_loader)
+    test(args, model, device, test_loader, classes)
 
 if __name__ == '__main__':
     main()
