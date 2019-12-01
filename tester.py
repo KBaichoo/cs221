@@ -11,6 +11,9 @@ import torchvision
 from model import Net
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.metrics import confusion_matrix
+import seaborn as sn
+import pandas as pd
 
 ce_loss = torch.nn.CrossEntropyLoss(size_average=False)
 
@@ -31,12 +34,23 @@ def imshow(img):
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
+class Binarize(object):
+    """Applies Laplacian. Args - kernel size."""
+
+    def __init__(self, threshold):
+        self.threshold = threshold
+
+    def __call__(self, sample):
+        y = torch.zeros(sample.size())
+        x = torch.ones(sample.size())
+        return torch.where(sample > self.threshold, x, y)
+
 def main():
     # Training settings
     parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
-    parser.add_argument('--batch-size', type=int, default=64, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=1, metavar='N',
                         help='input batch size for training (default: )')
-    parser.add_argument('--validation-batch-size', type=int, default=64, metavar='N',
+    parser.add_argument('--validation-batch-size', type=int, default=1, metavar='N',
                         help='input batch size for validation (default: )')
     parser.add_argument('--test-batch-size', type=int, default=1, metavar='N',
                         help='input batch size for testing (default: )')
@@ -64,34 +78,33 @@ def main():
 
     classes = ('left', 'right', 'stay')
 
-    test_loader = torch.utils.data.DataLoader(
-            datasets.ImageFolder('./frames/test/',
-                       transform=transforms.Compose([
-                           transforms.Grayscale(num_output_channels=3),
-                           transforms.Resize((256,256)),
-                           transforms.ToTensor(),
-                           transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                       ])),
-        batch_size=args.test_batch_size, shuffle=False, **kwargs)
-
-    device = torch.device("cuda")
-    model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet50', pretrained=False).to(device)
-    model.load_state_dict(torch.load('./resnet50.pt'))
-
     # test_loader = torch.utils.data.DataLoader(
-    #     datasets.ImageFolder('./frames/test/',
-    #                          transform=transforms.Compose([
-    #                              transforms.Grayscale(num_output_channels=1),
-    #                              transforms.Resize((64, 64)),
-    #                              transforms.RandomRotation(180),
-    #                              transforms.ToTensor(),
-    #                              Laplace(5),
-    #                              transforms.Normalize((0.1307,), (0.3081,))
-    #                          ])),
-    #     batch_size=args.test_batch_size, shuffle=True, **kwargs)
-    # model = Net().to(device)
-    # model.load_state_dict(torch.load('./mnist_cnn.pt'))
-    # model.eval()
+    #         datasets.ImageFolder('./frames/test/',
+    #                    transform=transforms.Compose([
+    #                        transforms.Grayscale(num_output_channels=3),
+    #                        transforms.Resize((256,256)),
+    #                        transforms.ToTensor(),
+    #                        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    #                    ])),
+    #     batch_size=args.test_batch_size, shuffle=False, **kwargs)
+    #
+    # device = torch.device("cuda")
+    # model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet50', pretrained=False).to(device)
+    # model.load_state_dict(torch.load('./resnet50.pt'))
+
+    test_loader = torch.utils.data.DataLoader(
+        datasets.ImageFolder('./frames/test/',
+                             transform=transforms.Compose([
+                                 transforms.Grayscale(num_output_channels=1),
+                                 transforms.Resize((64, 64)),
+                                 transforms.ToTensor(),
+                                 transforms.Normalize((0.1307,), (0.3081,)),
+                                 Binarize(0.2165)
+                             ])),
+        batch_size=args.validation_batch_size, shuffle=True, **kwargs)
+    model = Net().to(device)
+    model.load_state_dict(torch.load('./mnist_cnn.pt'))
+    model.eval()
 
     def test(args, model, device, test_loader, classes):
 
@@ -105,6 +118,10 @@ def main():
         model.eval()
         test_loss = 0
         correct = 0
+
+        true_values = []
+        predicted_values = []
+
         with torch.no_grad():
             for data, target in test_loader:
                 # imshow(torchvision.utils.make_grid(data))
@@ -115,6 +132,9 @@ def main():
 
 
                 _, predicted = torch.max(output, 1)
+
+                true_values.append(classes[target[0]])
+                predicted_values.append(classes[predicted[0]])
 
                 if classes[target[0]] == 'left':
                     left_total += 1
@@ -131,11 +151,11 @@ def main():
                     if classes[predicted[0]] == 'stay':
                         stay_correct += 1
 
-                if classes[target[0]] != classes[predicted[0]]:
-                    print('GroundTruth: ', ' '.join('%5s' % classes[target[j]] for j in range(1)))
-                    print('Predicted: ', ' '.join('%5s' % classes[predicted[j]]
-                                      for j in range(1)))
-                    imshow(torchvision.utils.make_grid(data))
+                # if classes[target[0]] != classes[predicted[0]]:
+                #     print('GroundTruth: ', ' '.join('%5s' % classes[target[j]] for j in range(1)))
+                #     print('Predicted: ', ' '.join('%5s' % classes[predicted[j]]
+                #                       for j in range(1)))
+                #     imshow(torchvision.utils.make_grid(data))
                 correct += pred.eq(target.view_as(pred)).sum().item()
 
         print('left accuracy: ', left_correct/left_total)
@@ -148,6 +168,15 @@ def main():
         print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
             test_loss, correct, len(test_loader.dataset),
             100. * correct / len(test_loader.dataset)))
+
+        cm = confusion_matrix(true_values, predicted_values, labels=['left', 'right', 'stay'])
+        print(cm)
+        cm_pd = pd.DataFrame(cm, index=['left', 'right', 'stay'], columns=['left', 'right', 'stay'])
+        sn.heatmap(cm_pd, annot=True)# font size
+        plt.title('Super Hexagon Confusion Matrix')
+        plt.ylabel('True label')
+        plt.xlabel('Predicted label')
+        plt.show()
 
     test(args, model, device, test_loader, classes)
 
