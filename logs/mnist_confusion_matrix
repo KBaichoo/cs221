@@ -1,9 +1,0 @@
-left accuracy:  0.4
-right accuracy:  0.1951219512195122
-stay accuracy:  0.7241379310344828
-
-Test set: Average loss: 4.9853, Accuracy: 74/159 (47%)
-
-[[24  9 27]
- [15  8 18]
- [10  6 42]]
