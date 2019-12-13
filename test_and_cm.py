@@ -176,6 +176,7 @@ def main():
         plt.title('Super Hexagon Confusion Matrix')
         plt.ylabel('True label')
         plt.xlabel('Predicted label')
+        plt.savefig('confusion_matrix.png')
         plt.show()
 
     test(args, model, device, test_loader, classes)
