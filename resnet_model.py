@@ -97,15 +97,15 @@ def imshow(img):
 def main():
     # Training settings
     parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
-    parser.add_argument('--batch-size', type=int, default=16, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=32, metavar='N',
                         help='input batch size for training (default: )')
-    parser.add_argument('--validation-batch-size', type=int, default=16, metavar='N',
+    parser.add_argument('--validation-batch-size', type=int, default=32, metavar='N',
                         help='input batch size for validation (default: )')
-    parser.add_argument('--test-batch-size', type=int, default=16, metavar='N',
+    parser.add_argument('--test-batch-size', type=int, default=32, metavar='N',
                         help='input batch size for testing (default: )')
-    parser.add_argument('--epochs', type=int, default=1000, metavar='N',
+    parser.add_argument('--epochs', type=int, default=150, metavar='N',
                         help='number of epochs to train (default: 5)')
-    parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
+    parser.add_argument('--lr', type=float, default=0.00001, metavar='LR',
                         help='learning rate (default: 0.01)')
     parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
                         help='SGD momentum (default: 0.5)')
@@ -125,7 +125,7 @@ def main():
 
     device = torch.device("cuda" if use_cuda else "cpu")
 
-    kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
+    kwargs = {'num_workers': 8, 'pin_memory': True} if use_cuda else {}
 
     train_loader = torch.utils.data.DataLoader(
             datasets.ImageFolder('./frames/train/',
@@ -156,9 +156,11 @@ def main():
                        ])),
         batch_size=args.test_batch_size, shuffle=True, **kwargs)
 
-    model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet50', pretrained=False).to(device)
+    model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet18', pretrained=False).to(device)
+    # optimizer = optim.Adam(model.parameters(), lr=args.lr)
+
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=1e-5)
-    scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, 'min')
+    # scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, 'min')
 
     best_loss_percentage = -1
     # old_best_loss_percentage = -1
@@ -171,12 +173,14 @@ def main():
         #     old_best_loss_percentage = best_loss_percentage
         #     if (args.save_model):
         #         torch.save(model.state_dict(),"resnet50.pt")
-        scheduler.step(current_loss)
+        if best_loss_percentage > 50:
+            break
+        # scheduler.step(current_loss)
 
     print("Best validation loss: {}%".format(best_loss_percentage))
 
     if (args.save_model):
-        torch.save(model.state_dict(),"resnet50.pt")
+        torch.save(model.state_dict(),"resnet18_accuracy.pt")
 
     test(args, model, device, test_loader)
 
