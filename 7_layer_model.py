@@ -1,5 +1,10 @@
+
+# BASED ON: https://github.com/pytorch/examples/tree/master/mnist
+
+
 from __future__ import print_function
 import argparse
+import kornia
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -10,11 +15,61 @@ import matplotlib.pyplot as plt
 import numpy as np
 from torch.optim import lr_scheduler
 
-# weights = [0] * 1000
-# weights[0] = 0.23
-# weights[1] = 0.30
-# weights[2] = 0.47
-# ce_loss = torch.nn.CrossEntropyLoss(size_average=False, weight=torch.FloatTensor(weights).cuda())
+
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, 3, 1, padding=1)
+        self.conv1_bn = nn.BatchNorm2d(32)
+        self.conv2 = nn.Conv2d(32, 32, 3, 1, padding=1)
+        self.conv2_bn = nn.BatchNorm2d(32)
+        self.conv3 = nn.Conv2d(32, 32, 3, 1, padding=1)
+        self.conv3_bn = nn.BatchNorm2d(32)
+        self.conv4 = nn.Conv2d(32, 64, 3, 1, padding=1)
+        self.conv4_bn = nn.BatchNorm2d(64)
+        self.conv5 = nn.Conv2d(64, 64, 3, 1, padding=1)
+        self.conv5_bn = nn.BatchNorm2d(64)
+        self.conv6 = nn.Conv2d(64, 96, 3, 1, padding=1)
+        self.conv6_bn = nn.BatchNorm2d(96)
+        self.conv7 = nn.Conv2d(96, 96, 3, 1, padding=1)
+        self.conv7_bn = nn.BatchNorm2d(96)
+        self.fc1 = nn.Linear(98304, 3)
+
+        def init_weights(m):
+            if isinstance(m, nn.Conv2d):
+                nn.init.xavier_normal_(m.weight.data)
+
+        self.apply(init_weights)
+
+    def forward(self, x):
+
+        # x = F.relu(self.conv1(x))
+        # x = F.relu(self.conv2(x))
+        # x = F.relu(self.conv3(x))
+        # x = F.max_pool2d(x, 2, 2)
+        # x = F.relu(self.conv4(x))
+        # x = F.relu(self.conv5(x))
+        # x = F.max_pool2d(x, 2, 2)
+        # x = F.relu(self.conv6(x))
+        # x = F.relu(self.conv7(x))
+        # x = x.view(x.shape[0], 98304)
+        # x = self.fc1(x)
+
+        x = F.relu(self.conv1_bn(self.conv1(x)))
+        x = F.relu(self.conv2_bn(self.conv2(x)))
+        x = F.relu(self.conv3_bn(self.conv3(x)))
+        x = F.max_pool2d(x, 2, 2)
+        x = F.relu(self.conv4_bn(self.conv4(x)))
+        x = F.relu(self.conv5_bn(self.conv5(x)))
+        x = F.max_pool2d(x, 2, 2)
+        x = F.relu(self.conv6_bn(self.conv6(x)))
+        x = F.relu(self.conv7_bn(self.conv7(x)))
+        x = x.view(x.shape[0], 98304)
+        x = self.fc1(x)
+        return x
+
+
+
 
 ce_loss = torch.nn.CrossEntropyLoss(size_average=False)
 
@@ -24,6 +79,15 @@ def train(args, model, device, train_loader, optimizer, epoch):
         data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
         output = model(data)
+        # print('----------------------------------------------------------------')
+        # print()
+        # print(data.shape)
+        # print()
+        # print(target.shape)
+        # print()
+        # print(output.shape)
+        # print()
+        # print('----------------------------------------------------------------')
         loss = ce_loss(output, target)
         loss.backward()
         optimizer.step()
@@ -94,18 +158,27 @@ def imshow(img):
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
+class Binarize(object):
+    """Applies Laplacian. Args - kernel size."""
+
+    def __init__(self, threshold):
+        self.threshold = threshold
+
+    def __call__(self, sample):
+        y = torch.zeros(sample.size())
+        x = torch.ones(sample.size())
+        return torch.where(sample > self.threshold, x, y)
+
 def main():
     # Training settings
     parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
-    parser.add_argument('--batch-size', type=int, default=16, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=32, metavar='N',
                         help='input batch size for training (default: )')
-    parser.add_argument('--validation-batch-size', type=int, default=16, metavar='N',
-                        help='input batch size for validation (default: )')
-    parser.add_argument('--test-batch-size', type=int, default=16, metavar='N',
-                        help='input batch size for testing (default: )')
-    parser.add_argument('--epochs', type=int, default=1000, metavar='N',
+    parser.add_argument('--validation-batch-size', type=int, default=32, metavar='N',
+                        help='input batch size for validationing (default: )')
+    parser.add_argument('--epochs', type=int, default=100, metavar='N',
                         help='number of epochs to train (default: 5)')
-    parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
+    parser.add_argument('--lr', type=float, default=0.0001, metavar='LR',
                         help='learning rate (default: 0.01)')
     parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
                         help='SGD momentum (default: 0.5)')
@@ -124,39 +197,48 @@ def main():
     torch.manual_seed(args.seed)
 
     device = torch.device("cuda" if use_cuda else "cpu")
+    if use_cuda:
+        print('using cuda')
+    else:
+        print('no cuda...')
 
-    kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
+    kwargs = {'num_workers': 8, 'pin_memory': True} if use_cuda else {}
 
+    # TODO(kbaichoo): should remove random rotation from test + from
+    # training (b/c exhaustive); further use validation.
+    # TODO(kbaichoo): add back normalization / fix the imshow func.
     train_loader = torch.utils.data.DataLoader(
-            datasets.ImageFolder('./frames/train/',
-                       transform=transforms.Compose([
-                           transforms.Grayscale(num_output_channels=3),
-                           transforms.CenterCrop((256,256)),
-                           transforms.ToTensor(),
-                           transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                       ])),
-        batch_size=args.batch_size, shuffle=True, **kwargs)
+        datasets.ImageFolder('./frames/train/',
+                             transform=transforms.Compose([
+                                 transforms.Grayscale(num_output_channels=1),
+                                 transforms.CenterCrop((128, 128)),
+                                 transforms.ToTensor(),
+                                 transforms.Normalize((0.1307,), (0.3081,)),
+                                 Binarize(0.2165)
+                             ])),
+        batch_size=args.batch_size, shuffle=True, drop_last=True, **kwargs)
     validation_loader = torch.utils.data.DataLoader(
-            datasets.ImageFolder('./frames/validation/',
-                       transform=transforms.Compose([
-                           transforms.Grayscale(num_output_channels=3),
-                           transforms.CenterCrop((256,256)),
-                           transforms.ToTensor(),
-                           transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                       ])),
-        batch_size=args.validation_batch_size, shuffle=True, **kwargs)
-
+        datasets.ImageFolder('./frames/validation/',
+                             transform=transforms.Compose([
+                                 transforms.Grayscale(num_output_channels=1),
+                                 transforms.CenterCrop((128, 128)),
+                                 transforms.ToTensor(),
+                                 transforms.Normalize((0.1307,), (0.3081,)),
+                                 Binarize(0.2165)
+                             ])),
+        batch_size=args.validation_batch_size, shuffle=True, drop_last=True, **kwargs)
     test_loader = torch.utils.data.DataLoader(
-            datasets.ImageFolder('./frames/test/',
-                       transform=transforms.Compose([
-                           transforms.Grayscale(num_output_channels=3),
-                           transforms.CenterCrop((256,256)),
-                           transforms.ToTensor(),
-                           transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                       ])),
-        batch_size=args.test_batch_size, shuffle=True, **kwargs)
+        datasets.ImageFolder('./frames/test/',
+                             transform=transforms.Compose([
+                                 transforms.Grayscale(num_output_channels=1),
+                                 transforms.CenterCrop((128, 128)),
+                                 transforms.ToTensor(),
+                                 transforms.Normalize((0.1307,), (0.3081,)),
+                                 Binarize(0.2165)
+                             ])),
+        batch_size=args.validation_batch_size, shuffle=True, drop_last=True, **kwargs)
 
-    model = torch.hub.load('pytorch/vision:v0.4.2', 'resnet50', pretrained=False).to(device)
+    model = Net().to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=1e-5)
     scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, 'min')
 
@@ -176,7 +258,7 @@ def main():
     print("Best validation loss: {}%".format(best_loss_percentage))
 
     if (args.save_model):
-        torch.save(model.state_dict(),"resnet50.pt")
+        torch.save(model.state_dict(),"7layer.pt")
 
     test(args, model, device, test_loader)
 
