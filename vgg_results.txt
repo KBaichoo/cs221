@@ -1,0 +1,1362 @@
+Using CUDA
+Loaded 3912 images under train
+Classes: 
+['left', 'right', 'stay']
+Loaded 180 images under validation
+Classes: 
+['left', 'right', 'stay']
+Loaded 159 images under test
+Classes: 
+['left', 'right', 'stay']
+1000
+VGG(
+  (features): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace=True)
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU(inplace=True)
+    (6): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (7): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (8): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (9): ReLU(inplace=True)
+    (10): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (11): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (12): ReLU(inplace=True)
+    (13): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (14): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (15): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (16): ReLU(inplace=True)
+    (17): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (18): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (19): ReLU(inplace=True)
+    (20): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (21): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (22): ReLU(inplace=True)
+    (23): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (24): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (25): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (26): ReLU(inplace=True)
+    (27): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (28): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (29): ReLU(inplace=True)
+    (30): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (31): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (32): ReLU(inplace=True)
+    (33): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (34): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (35): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (36): ReLU(inplace=True)
+    (37): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (38): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (39): ReLU(inplace=True)
+    (40): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (41): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (42): ReLU(inplace=True)
+    (43): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(7, 7))
+  (classifier): Sequential(
+    (0): Linear(in_features=25088, out_features=4096, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): Linear(in_features=4096, out_features=4096, bias=True)
+    (4): ReLU(inplace=True)
+    (5): Dropout(p=0.5, inplace=False)
+    (6): Linear(in_features=4096, out_features=3, bias=True)
+  )
+)
+Test before training
+Evaluating model
+----------
+Test batch 0/20
+Evaluation completed in 0m 5s
+Avg loss (test): 0.1436
+Avg acc (test): 0.0000
+----------
+Ground truth:
+Prediction:
+Epoch 0/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 0 result: 
+Avg loss (train): 0.1186
+Avg loss (val): 0.1513
+Avg acc (val): 0.0000
+
+train set: Accuracy: (55%)
+
+
+validation set: Accuracy: (36%)
+
+----------
+
+Epoch 1/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 1 result: 
+Avg loss (train): 0.1097
+Avg loss (val): 0.1469
+Avg acc (val): 0.0000
+
+train set: Accuracy: (58%)
+
+
+validation set: Accuracy: (38%)
+
+----------
+
+Epoch 2/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 2 result: 
+Avg loss (train): 0.1041
+Avg loss (val): 0.1683
+Avg acc (val): 0.0000
+
+train set: Accuracy: (63%)
+
+
+validation set: Accuracy: (38%)
+
+----------
+
+Epoch 3/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 3 result: 
+Avg loss (train): 0.0989
+Avg loss (val): 0.1555
+Avg acc (val): 0.0000
+
+train set: Accuracy: (64%)
+
+
+validation set: Accuracy: (39%)
+
+----------
+
+Epoch 4/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 4 result: 
+Avg loss (train): 0.0969
+Avg loss (val): 0.1523
+Avg acc (val): 0.0000
+
+train set: Accuracy: (65%)
+
+
+validation set: Accuracy: (40%)
+
+----------
+
+Epoch 5/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 5 result: 
+Avg loss (train): 0.0896
+Avg loss (val): 0.1908
+Avg acc (val): 0.0000
+
+train set: Accuracy: (66%)
+
+
+validation set: Accuracy: (37%)
+
+----------
+
+Epoch 6/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 6 result: 
+Avg loss (train): 0.0858
+Avg loss (val): 0.1842
+Avg acc (val): 0.0000
+
+train set: Accuracy: (69%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 7/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 7 result: 
+Avg loss (train): 0.0866
+Avg loss (val): 0.1573
+Avg acc (val): 0.0000
+
+train set: Accuracy: (68%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 8/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 8 result: 
+Avg loss (train): 0.0835
+Avg loss (val): 0.2539
+Avg acc (val): 0.0000
+
+train set: Accuracy: (67%)
+
+
+validation set: Accuracy: (40%)
+
+----------
+
+Epoch 9/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 9 result: 
+Avg loss (train): 0.0800
+Avg loss (val): 0.2560
+Avg acc (val): 0.0000
+
+train set: Accuracy: (68%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 10/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 10 result: 
+Avg loss (train): 0.0750
+Avg loss (val): 0.2332
+Avg acc (val): 0.0000
+
+train set: Accuracy: (74%)
+
+
+validation set: Accuracy: (39%)
+
+----------
+
+Epoch 11/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 11 result: 
+Avg loss (train): 0.0741
+Avg loss (val): 0.1813
+Avg acc (val): 0.0000
+
+train set: Accuracy: (75%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 12/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 12 result: 
+Avg loss (train): 0.0699
+Avg loss (val): 0.1963
+Avg acc (val): 0.0000
+
+train set: Accuracy: (76%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 13/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 13 result: 
+Avg loss (train): 0.0684
+Avg loss (val): 0.2115
+Avg acc (val): 0.0000
+
+train set: Accuracy: (78%)
+
+
+validation set: Accuracy: (45%)
+
+----------
+
+Epoch 14/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 14 result: 
+Avg loss (train): 0.0603
+Avg loss (val): 0.4342
+Avg acc (val): 0.0000
+
+train set: Accuracy: (70%)
+
+
+validation set: Accuracy: (41%)
+
+----------
+
+Epoch 15/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 15 result: 
+Avg loss (train): 0.0646
+Avg loss (val): 0.3514
+Avg acc (val): 0.0000
+
+train set: Accuracy: (73%)
+
+
+validation set: Accuracy: (39%)
+
+----------
+
+Epoch 16/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 16 result: 
+Avg loss (train): 0.0601
+Avg loss (val): 0.3994
+Avg acc (val): 0.0000
+
+train set: Accuracy: (75%)
+
+
+validation set: Accuracy: (37%)
+
+----------
+
+Epoch 17/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 17 result: 
+Avg loss (train): 0.0602
+Avg loss (val): 0.2079
+Avg acc (val): 0.0000
+
+train set: Accuracy: (76%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 18/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 18 result: 
+Avg loss (train): 0.0556
+Avg loss (val): 0.4022
+Avg acc (val): 0.0000
+
+train set: Accuracy: (78%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 19/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 19 result: 
+Avg loss (train): 0.0548
+Avg loss (val): 0.3145
+Avg acc (val): 0.0000
+
+train set: Accuracy: (78%)
+
+
+validation set: Accuracy: (38%)
+
+----------
+
+Epoch 20/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 20 result: 
+Avg loss (train): 0.0546
+Avg loss (val): 0.2913
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 21/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 21 result: 
+Avg loss (train): 0.0502
+Avg loss (val): 0.3430
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (41%)
+
+----------
+
+Epoch 22/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 22 result: 
+Avg loss (train): 0.0494
+Avg loss (val): 0.3033
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 23/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 23 result: 
+Avg loss (train): 0.0478
+Avg loss (val): 0.2957
+Avg acc (val): 0.0000
+
+train set: Accuracy: (79%)
+
+
+validation set: Accuracy: (45%)
+
+----------
+
+Epoch 24/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 24 result: 
+Avg loss (train): 0.0513
+Avg loss (val): 0.4433
+Avg acc (val): 0.0000
+
+train set: Accuracy: (77%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 25/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 25 result: 
+Avg loss (train): 0.0462
+Avg loss (val): 0.3254
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 26/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 26 result: 
+Avg loss (train): 0.0497
+Avg loss (val): 0.3466
+Avg acc (val): 0.0000
+
+train set: Accuracy: (79%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 27/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 27 result: 
+Avg loss (train): 0.0421
+Avg loss (val): 0.3819
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 28/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 28 result: 
+Avg loss (train): 0.0434
+Avg loss (val): 0.4539
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (38%)
+
+----------
+
+Epoch 29/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 29 result: 
+Avg loss (train): 0.0450
+Avg loss (val): 0.4267
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 30/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 30 result: 
+Avg loss (train): 0.0413
+Avg loss (val): 0.4310
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 31/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 31 result: 
+Avg loss (train): 0.0474
+Avg loss (val): 0.3761
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 32/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 32 result: 
+Avg loss (train): 0.0452
+Avg loss (val): 0.3790
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (39%)
+
+----------
+
+Epoch 33/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 33 result: 
+Avg loss (train): 0.0420
+Avg loss (val): 0.4369
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 34/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 34 result: 
+Avg loss (train): 0.0415
+Avg loss (val): 0.5037
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (41%)
+
+----------
+
+Epoch 35/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 35 result: 
+Avg loss (train): 0.0379
+Avg loss (val): 0.5169
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 36/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 36 result: 
+Avg loss (train): 0.0435
+Avg loss (val): 0.5022
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 37/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 37 result: 
+Avg loss (train): 0.0438
+Avg loss (val): 0.4867
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 38/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 38 result: 
+Avg loss (train): 0.0429
+Avg loss (val): 0.3891
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (39%)
+
+----------
+
+Epoch 39/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 39 result: 
+Avg loss (train): 0.0424
+Avg loss (val): 0.4016
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 40/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 40 result: 
+Avg loss (train): 0.0392
+Avg loss (val): 0.5174
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (39%)
+
+----------
+
+Epoch 41/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 41 result: 
+Avg loss (train): 0.0403
+Avg loss (val): 0.7691
+Avg acc (val): 0.0000
+
+train set: Accuracy: (79%)
+
+
+validation set: Accuracy: (38%)
+
+----------
+
+Epoch 42/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 42 result: 
+Avg loss (train): 0.0419
+Avg loss (val): 0.4977
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (39%)
+
+----------
+
+Epoch 43/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 43 result: 
+Avg loss (train): 0.0392
+Avg loss (val): 0.3837
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 44/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 44 result: 
+Avg loss (train): 0.0382
+Avg loss (val): 0.5152
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 45/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 45 result: 
+Avg loss (train): 0.0429
+Avg loss (val): 0.5643
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 46/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 46 result: 
+Avg loss (train): 0.0437
+Avg loss (val): 0.3608
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 47/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 47 result: 
+Avg loss (train): 0.0391
+Avg loss (val): 0.5256
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 48/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 48 result: 
+Avg loss (train): 0.0393
+Avg loss (val): 0.5031
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 49/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 49 result: 
+Avg loss (train): 0.0400
+Avg loss (val): 0.3998
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 50/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 50 result: 
+Avg loss (train): 0.0373
+Avg loss (val): 0.5338
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 51/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 51 result: 
+Avg loss (train): 0.0367
+Avg loss (val): 0.4520
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 52/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 52 result: 
+Avg loss (train): 0.0385
+Avg loss (val): 0.3501
+Avg acc (val): 0.0000
+
+train set: Accuracy: (78%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 53/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 53 result: 
+Avg loss (train): 0.0423
+Avg loss (val): 0.5132
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (40%)
+
+----------
+
+Epoch 54/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 54 result: 
+Avg loss (train): 0.0394
+Avg loss (val): 0.6646
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (40%)
+
+----------
+
+Epoch 55/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 55 result: 
+Avg loss (train): 0.0396
+Avg loss (val): 0.4775
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 56/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 56 result: 
+Avg loss (train): 0.0384
+Avg loss (val): 0.4619
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 57/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 57 result: 
+Avg loss (train): 0.0387
+Avg loss (val): 0.3748
+Avg acc (val): 0.0000
+
+train set: Accuracy: (77%)
+
+
+validation set: Accuracy: (49%)
+
+----------
+
+Epoch 58/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 58 result: 
+Avg loss (train): 0.0390
+Avg loss (val): 0.6170
+Avg acc (val): 0.0000
+
+train set: Accuracy: (80%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 59/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 59 result: 
+Avg loss (train): 0.0389
+Avg loss (val): 0.5225
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (45%)
+
+----------
+
+Epoch 60/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 60 result: 
+Avg loss (train): 0.0377
+Avg loss (val): 0.5243
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (45%)
+
+----------
+
+Epoch 61/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 61 result: 
+Avg loss (train): 0.0374
+Avg loss (val): 0.5805
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 62/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 62 result: 
+Avg loss (train): 0.0377
+Avg loss (val): 0.6291
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (44%)
+
+----------
+
+Epoch 63/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 63 result: 
+Avg loss (train): 0.0380
+Avg loss (val): 0.6139
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 64/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 64 result: 
+Avg loss (train): 0.0402
+Avg loss (val): 0.9691
+Avg acc (val): 0.0000
+
+train set: Accuracy: (76%)
+
+
+validation set: Accuracy: (39%)
+
+----------
+
+Epoch 65/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 65 result: 
+Avg loss (train): 0.0418
+Avg loss (val): 0.5457
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 66/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 66 result: 
+Avg loss (train): 0.0401
+Avg loss (val): 0.5260
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 67/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 67 result: 
+Avg loss (train): 0.0382
+Avg loss (val): 0.5113
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (47%)
+
+----------
+
+Epoch 68/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 68 result: 
+Avg loss (train): 0.0368
+Avg loss (val): 0.5744
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 69/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 69 result: 
+Avg loss (train): 0.0377
+Avg loss (val): 0.5752
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (41%)
+
+----------
+
+Epoch 70/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 70 result: 
+Avg loss (train): 0.0378
+Avg loss (val): 0.6136
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (40%)
+
+----------
+
+Epoch 71/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 71 result: 
+Avg loss (train): 0.0375
+Avg loss (val): 0.6460
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (41%)
+
+----------
+
+Epoch 72/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 72 result: 
+Avg loss (train): 0.0375
+Avg loss (val): 0.6390
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 73/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 73 result: 
+Avg loss (train): 0.0376
+Avg loss (val): 0.5764
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 74/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 74 result: 
+Avg loss (train): 0.0380
+Avg loss (val): 0.6352
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (46%)
+
+----------
+
+Epoch 75/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 75 result: 
+Avg loss (train): 0.0376
+Avg loss (val): 0.6875
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 76/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 76 result: 
+Avg loss (train): 0.0375
+Avg loss (val): 0.6698
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 77/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 77 result: 
+Avg loss (train): 0.0394
+Avg loss (val): 0.5346
+Avg acc (val): 0.0000
+
+train set: Accuracy: (82%)
+
+
+validation set: Accuracy: (42%)
+
+----------
+
+Epoch 78/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 78 result: 
+Avg loss (train): 0.0395
+Avg loss (val): 0.6168
+Avg acc (val): 0.0000
+
+train set: Accuracy: (81%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 79/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
+Train Accuracy batch 0/489Train Accuracy batch 20/489Train Accuracy batch 40/489Train Accuracy batch 60/489Train Accuracy batch 80/489Train Accuracy batch 100/489Train Accuracy batch 120/489Train Accuracy batch 140/489Train Accuracy batch 160/489Train Accuracy batch 180/489Train Accuracy batch 200/489Train Accuracy batch 220/489Train Accuracy batch 240/489Train Accuracy batch 260/489Train Accuracy batch 280/489Train Accuracy batch 300/489Train Accuracy batch 320/489Train Accuracy batch 340/489Train Accuracy batch 360/489Train Accuracy batch 380/489Train Accuracy batch 400/489Train Accuracy batch 420/489Train Accuracy batch 440/489Train Accuracy batch 460/489Train Accuracy batch 480/489Validation batch 0/23Validation batch 20/23
+Epoch 79 result: 
+Avg loss (train): 0.0366
+Avg loss (val): 0.5696
+Avg acc (val): 0.0000
+
+train set: Accuracy: (83%)
+
+
+validation set: Accuracy: (43%)
+
+----------
+
+Epoch 80/150
+----------
+Training batch 0/244.5Training batch 20/244.5Training batch 40/244.5Training batch 60/244.5Training batch 80/244.5Training batch 100/244.5Training batch 120/244.5Training batch 140/244.5Training batch 160/244.5Training batch 180/244.5Training batch 200/244.5Training batch 220/244.5Training batch 240/244.5
