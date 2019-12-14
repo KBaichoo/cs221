@@ -1,3 +1,3 @@
-on 20062, predicts correct class: stay, but the wrong class left on rot
-on 20050, predicts correct class: right, but the wrong class stay on rot
-on 186, predicts correct class: left, but the wrong class stay on rot, subtle of arrow center
+87 true stay - predicts stay on rotated (Correct), but Right (incorrect) on orig
+61 true label: right- Predicts left (incorrect?) on orig, but rotation is stay
+17 true left - orig: stay, rotate: left (correct)
