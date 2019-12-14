@@ -90,8 +90,9 @@ def validation(args, model, device, validation_loader, type_):
     validation_loss /= len(validation_loader.dataset)
 
     print('\n{} set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(type_,
-        validation_loss, correct, len(validation_loader.dataset),
-        100. * correct / len(validation_loader.dataset)))
+                                                                               validation_loss, correct, len(
+                                                                                   validation_loader.dataset),
+                                                                               100. * correct / len(validation_loader.dataset)))
 
 
 def test(args, model, device, test_loader):
