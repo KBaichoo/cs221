@@ -1,0 +1,3 @@
+on 20062, predicts correct class: stay, but the wrong class left on rot
+on 20050, predicts correct class: right, but the wrong class stay on rot
+on 186, predicts correct class: left, but the wrong class stay on rot, subtle of arrow center

@@ -1,0 +1,11 @@
+Inference took 1.5861577987670898 seconds
+Avg inference took 0.009975835212371635 seconds
+left accuracy:  0.4
+right accuracy:  0.24390243902439024
+stay accuracy:  0.7241379310344828
+
+Test set: Average loss: 5.0527, Accuracy: 76/159 (48%)
+
+[[24  8 28]
+ [14 10 17]
+ [ 8  8 42]]

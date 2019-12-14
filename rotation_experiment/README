@@ -1,0 +1,6 @@
+This directory contains the test files, a script for running the model and a
+script for rotating imgs by 180.
+
+The idea is that a 180 rotation of an image is equivalent (we tried other
+rotations by ran into issues), so we're trying this one at least.
+If differs on rotation of img, then our model doesn't understand rotation.

@@ -14,6 +14,7 @@ import numpy as np
 from sklearn.metrics import confusion_matrix
 import seaborn as sn
 import pandas as pd
+import time
 
 ce_loss = torch.nn.CrossEntropyLoss(size_average=False)
 
@@ -121,7 +122,8 @@ def main():
 
         true_values = []
         predicted_values = []
-
+        
+        start_time = time.time()
         with torch.no_grad():
             for data, target in test_loader:
                 # imshow(torchvision.utils.make_grid(data))
@@ -157,6 +159,11 @@ def main():
                 #                       for j in range(1)))
                 #     imshow(torchvision.utils.make_grid(data))
                 correct += pred.eq(target.view_as(pred)).sum().item()
+        end = time.time()
+        
+        delta = end - start_time
+        print('Inference took {} seconds'.format(delta))
+        print('Avg inference took {} seconds'.format(delta / len(test_loader.dataset)))
 
         print('left accuracy: ', left_correct/left_total)
         print('right accuracy: ', right_correct/right_total)
@@ -176,6 +183,7 @@ def main():
         plt.title('Super Hexagon Confusion Matrix')
         plt.ylabel('True label')
         plt.xlabel('Predicted label')
+        plt.savefig('confusion_matrix.png')
         plt.show()
 
     test(args, model, device, test_loader, classes)
