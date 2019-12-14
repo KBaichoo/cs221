@@ -13,6 +13,5 @@ for class_type in classes:
             continue
 
         x = Image.open(filename)
-        y = x.transpose(Image.FLIP_TOP_BOTTOM)
-        # y = x.rotate(180)
+        y = x.rotate(180)
         y.save(filename.split('.')[0] + '_rot' + '.jpg', 'JPEG')
