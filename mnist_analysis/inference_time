@@ -1,1 +1,1 @@
-AVG time for inference across test set: 9.9mS
+AVG time for inference across test set: 18.6mS on laptop.
