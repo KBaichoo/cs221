@@ -25,28 +25,45 @@ TRAIN = 'train'
 VAL = 'validation'
 TEST = 'test'
 
+class Binarize(object):
+    """Applies Laplacian. Args - kernel size."""
+
+    def __init__(self, threshold):
+        self.threshold = threshold
+
+    def __call__(self, sample):
+        y = torch.zeros(sample.size())
+        x = torch.ones(sample.size())
+        # print('mean:{}'.format(torch.mean(sample)))
+        return torch.where(sample > self.threshold, x, y)
+
+
+
 # VGG-16 Takes 224x224 images as input, so we resize all of them
 data_transforms = {
     TRAIN: transforms.Compose([
-        # Data augmentation is a good practice for the train set
-        # Here, we randomly crop the image to 224x224 and
-        # randomly flip it horizontally.
-        transforms.Grayscale(num_output_channels=1),
-        transforms.RandomResizedCrop(224),
-        transforms.RandomHorizontalFlip(),
+        transforms.Grayscale(num_output_channels=3),
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
         transforms.ToTensor(),
+        transforms.Normalize((0.1307,), (0.3081,)),
+        Binarize(0.2165)
     ]),
     VAL: transforms.Compose([
-        transforms.Grayscale(num_output_channels=1),
+        transforms.Grayscale(num_output_channels=3),
         transforms.Resize(256),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
+        transforms.Normalize((0.1307,), (0.3081,)),
+        Binarize(0.2165)
     ]),
     TEST: transforms.Compose([
-        transforms.Grayscale(num_output_channels=1),
+        transforms.Grayscale(num_output_channels=3),
         transforms.Resize(256),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
+        transforms.Normalize((0.1307,), (0.3081,)),
+        Binarize(0.2165)
     ])
 }
 
@@ -293,6 +310,32 @@ def train_model(vgg, criterion, optimizer, scheduler, num_epochs=10):
         vgg.train(False)
         vgg.eval()
 
+        # Do training acc. eval like the other models (when weights frozen)
+        acc_train = 0
+        with torch.no_grad():
+            for i, data in enumerate(dataloaders[TRAIN]):
+                if i % 20 == 0:
+                    print("\rTrain Accuracy batch {}/{}".format(i,
+                                                            train_batches),
+                          end='', flush=True)
+
+                inputs, labels = data
+
+                if use_gpu:
+                    inputs, labels = inputs.cuda(), labels.cuda()
+
+                optimizer.zero_grad()
+
+                outputs = vgg(inputs)
+
+                _, preds = torch.max(outputs.data, 1)
+
+                acc_train += torch.sum(preds == labels.data)
+
+                del inputs, labels, outputs, preds
+                torch.cuda.empty_cache()
+
+
         with torch.no_grad():
             for i, data in enumerate(dataloaders[VAL]):
                 if i % 20 == 0:
@@ -324,9 +367,13 @@ def train_model(vgg, criterion, optimizer, scheduler, num_epochs=10):
         print()
         print("Epoch {} result: ".format(epoch))
         print("Avg loss (train): {:.4f}".format(avg_loss))
-        print("Avg acc (train): {:.4f}".format(avg_acc))
+        #print("Avg acc (train): {:.4f}".format(avg_acc))
         print("Avg loss (val): {:.4f}".format(avg_loss_val))
         print("Avg acc (val): {:.4f}".format(avg_acc_val))
+        print('\n{} set: Accuracy: ({:.0f}%)\n'.format('train',
+            100. * acc_train / len(dataloaders[TRAIN].dataset)))
+        print('\n{} set: Accuracy: ({:.0f}%)\n'.format('validation',
+            100. * acc_val / len(dataloaders[VAL].dataset)))
         print('-' * 10)
         print()
 
@@ -345,7 +392,7 @@ def train_model(vgg, criterion, optimizer, scheduler, num_epochs=10):
 
 
 vgg16 = train_model(vgg16, criterion, optimizer_ft,
-                    exp_lr_scheduler, num_epochs=2)
+                    exp_lr_scheduler, num_epochs=150)
 torch.save(vgg16.state_dict(), 'VGG16_model.pt')
 
 eval_model(vgg16, criterion)
